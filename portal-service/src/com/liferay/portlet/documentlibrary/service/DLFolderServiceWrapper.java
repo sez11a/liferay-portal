@@ -31,6 +31,24 @@ public class DLFolderServiceWrapper implements DLFolderService,
 		_dlFolderService = dlFolderService;
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier() {
+		return _dlFolderService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_dlFolderService.setBeanIdentifier(beanIdentifier);
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
 		long groupId, long repositoryId, boolean mountPoint,
 		long parentFolderId, java.lang.String name,
@@ -228,10 +246,11 @@ public class DLFolderServiceWrapper implements DLFolderService,
 	}
 
 	public com.liferay.portal.model.Lock refreshFolderLock(
-		java.lang.String lockUuid, long expirationTime)
+		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFolderService.refreshFolderLock(lockUuid, expirationTime);
+		return _dlFolderService.refreshFolderLock(lockUuid, companyId,
+			expirationTime);
 	}
 
 	public void unlockFolder(long groupId, long folderId,

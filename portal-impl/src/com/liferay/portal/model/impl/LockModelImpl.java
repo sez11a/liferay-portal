@@ -34,6 +34,8 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The base model implementation for the Lock service. Represents a row in the &quot;Lock_&quot; database table, with each column mapped to a property of this class.
@@ -83,10 +85,11 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.Lock"),
 			true);
 	public static long CLASSNAME_COLUMN_BITMASK = 1L;
-	public static long EXPIRATIONDATE_COLUMN_BITMASK = 2L;
-	public static long KEY_COLUMN_BITMASK = 4L;
-	public static long OWNER_COLUMN_BITMASK = 8L;
-	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long EXPIRATIONDATE_COLUMN_BITMASK = 4L;
+	public static long KEY_COLUMN_BITMASK = 8L;
+	public static long OWNER_COLUMN_BITMASK = 16L;
+	public static long UUID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Lock"));
 
@@ -115,6 +118,94 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	public String getModelClassName() {
 		return Lock.class.getName();
+	}
+
+	@Override
+	public Map<String, Object> getModelAttributes() {
+		Map<String, Object> attributes = new HashMap<String, Object>();
+
+		attributes.put("uuid", getUuid());
+		attributes.put("lockId", getLockId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("className", getClassName());
+		attributes.put("key", getKey());
+		attributes.put("owner", getOwner());
+		attributes.put("inheritable", getInheritable());
+		attributes.put("expirationDate", getExpirationDate());
+
+		return attributes;
+	}
+
+	@Override
+	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
+		Long lockId = (Long)attributes.get("lockId");
+
+		if (lockId != null) {
+			setLockId(lockId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		String className = (String)attributes.get("className");
+
+		if (className != null) {
+			setClassName(className);
+		}
+
+		String key = (String)attributes.get("key");
+
+		if (key != null) {
+			setKey(key);
+		}
+
+		String owner = (String)attributes.get("owner");
+
+		if (owner != null) {
+			setOwner(owner);
+		}
+
+		Boolean inheritable = (Boolean)attributes.get("inheritable");
+
+		if (inheritable != null) {
+			setInheritable(inheritable);
+		}
+
+		Date expirationDate = (Date)attributes.get("expirationDate");
+
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
+		}
 	}
 
 	public String getUuid() {
@@ -151,7 +242,19 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getUserId() {
@@ -391,6 +494,10 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 		lockModelImpl._originalUuid = lockModelImpl._uuid;
 
+		lockModelImpl._originalCompanyId = lockModelImpl._companyId;
+
+		lockModelImpl._setOriginalCompanyId = false;
+
 		lockModelImpl._originalClassName = lockModelImpl._className;
 
 		lockModelImpl._originalKey = lockModelImpl._key;
@@ -571,6 +678,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	private String _originalUuid;
 	private long _lockId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

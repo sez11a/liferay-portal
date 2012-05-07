@@ -90,6 +90,10 @@ public class SocialActivityLimitLocalServiceUtil {
 		return getService().deleteSocialActivityLimit(socialActivityLimit);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*
@@ -272,6 +276,15 @@ public class SocialActivityLimitLocalServiceUtil {
 		return getService()
 				   .addActivityLimit(userId, groupId, classNameId, classPK,
 			activityType, activityCounterName, limitPeriod);
+	}
+
+	public static com.liferay.portlet.social.model.SocialActivityLimit fetchActivityLimit(
+		long groupId, long userId, long classNameId, long classPK,
+		int activityType, java.lang.String activityCounterName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchActivityLimit(groupId, userId, classNameId, classPK,
+			activityType, activityCounterName);
 	}
 
 	public static SocialActivityLimitLocalService getService() {

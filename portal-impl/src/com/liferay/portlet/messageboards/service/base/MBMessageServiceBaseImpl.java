@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.CompanyService;
 import com.liferay.portal.service.GroupLocalService;
@@ -35,7 +36,6 @@ import com.liferay.portal.service.SubscriptionLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalService;
-import com.liferay.portal.service.base.PrincipalBean;
 import com.liferay.portal.service.persistence.CompanyPersistence;
 import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
@@ -55,6 +55,7 @@ import com.liferay.portlet.asset.service.AssetTagLocalService;
 import com.liferay.portlet.asset.service.AssetTagService;
 import com.liferay.portlet.asset.service.persistence.AssetEntryFinder;
 import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
+import com.liferay.portlet.asset.service.persistence.AssetLinkFinder;
 import com.liferay.portlet.asset.service.persistence.AssetLinkPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetTagFinder;
 import com.liferay.portlet.asset.service.persistence.AssetTagPersistence;
@@ -114,7 +115,7 @@ import javax.sql.DataSource;
  * @see com.liferay.portlet.messageboards.service.MBMessageServiceUtil
  * @generated
  */
-public abstract class MBMessageServiceBaseImpl extends PrincipalBean
+public abstract class MBMessageServiceBaseImpl extends BaseServiceImpl
 	implements MBMessageService, IdentifiableBean {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1121,6 +1122,24 @@ public abstract class MBMessageServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Returns the asset link finder.
+	 *
+	 * @return the asset link finder
+	 */
+	public AssetLinkFinder getAssetLinkFinder() {
+		return assetLinkFinder;
+	}
+
+	/**
+	 * Sets the asset link finder.
+	 *
+	 * @param assetLinkFinder the asset link finder
+	 */
+	public void setAssetLinkFinder(AssetLinkFinder assetLinkFinder) {
+		this.assetLinkFinder = assetLinkFinder;
+	}
+
+	/**
 	 * Returns the asset tag local service.
 	 *
 	 * @return the asset tag local service
@@ -1533,12 +1552,6 @@ public abstract class MBMessageServiceBaseImpl extends PrincipalBean
 		_beanIdentifier = beanIdentifier;
 	}
 
-	protected ClassLoader getClassLoader() {
-		Class<?> clazz = getClass();
-
-		return clazz.getClassLoader();
-	}
-
 	protected Class<?> getModelClass() {
 		return MBMessage.class;
 	}
@@ -1674,6 +1687,8 @@ public abstract class MBMessageServiceBaseImpl extends PrincipalBean
 	protected AssetLinkLocalService assetLinkLocalService;
 	@BeanReference(type = AssetLinkPersistence.class)
 	protected AssetLinkPersistence assetLinkPersistence;
+	@BeanReference(type = AssetLinkFinder.class)
+	protected AssetLinkFinder assetLinkFinder;
 	@BeanReference(type = AssetTagLocalService.class)
 	protected AssetTagLocalService assetTagLocalService;
 	@BeanReference(type = AssetTagService.class)

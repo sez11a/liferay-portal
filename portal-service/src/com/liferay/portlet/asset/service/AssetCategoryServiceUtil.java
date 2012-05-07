@@ -37,6 +37,25 @@ public class AssetCategoryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.asset.service.impl.AssetCategoryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
 	public static com.liferay.portlet.asset.model.AssetCategory addCategory(
 		long parentCategoryId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -92,13 +111,12 @@ public class AssetCategoryServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray getJSONSearch(
-		long groupId, java.lang.String keywords, long vocabularyId, int start,
-		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		long groupId, java.lang.String name, long[] vocabularyIds, int start,
+		int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getJSONSearch(groupId, keywords, vocabularyId, start, end,
-			obc);
+				   .getJSONSearch(groupId, name, vocabularyIds, start, end);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getJSONVocabularyCategories(

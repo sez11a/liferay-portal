@@ -23,12 +23,14 @@ import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.CompanyService;
 import com.liferay.portal.service.GroupLocalService;
@@ -65,6 +67,7 @@ import com.liferay.portlet.asset.service.persistence.AssetCategoryFinder;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetEntryFinder;
 import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
+import com.liferay.portlet.asset.service.persistence.AssetLinkFinder;
 import com.liferay.portlet.asset.service.persistence.AssetLinkPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetTagFinder;
 import com.liferay.portlet.asset.service.persistence.AssetTagPersistence;
@@ -79,6 +82,8 @@ import com.liferay.portlet.journal.service.JournalArticleService;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalService;
 import com.liferay.portlet.journal.service.JournalFeedLocalService;
 import com.liferay.portlet.journal.service.JournalFeedService;
+import com.liferay.portlet.journal.service.JournalFolderLocalService;
+import com.liferay.portlet.journal.service.JournalFolderService;
 import com.liferay.portlet.journal.service.JournalStructureLocalService;
 import com.liferay.portlet.journal.service.JournalStructureService;
 import com.liferay.portlet.journal.service.JournalTemplateLocalService;
@@ -90,6 +95,8 @@ import com.liferay.portlet.journal.service.persistence.JournalArticleResourcePer
 import com.liferay.portlet.journal.service.persistence.JournalContentSearchPersistence;
 import com.liferay.portlet.journal.service.persistence.JournalFeedFinder;
 import com.liferay.portlet.journal.service.persistence.JournalFeedPersistence;
+import com.liferay.portlet.journal.service.persistence.JournalFolderFinder;
+import com.liferay.portlet.journal.service.persistence.JournalFolderPersistence;
 import com.liferay.portlet.journal.service.persistence.JournalStructureFinder;
 import com.liferay.portlet.journal.service.persistence.JournalStructurePersistence;
 import com.liferay.portlet.journal.service.persistence.JournalTemplateFinder;
@@ -121,7 +128,8 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class JournalArticleLocalServiceBaseImpl
-	implements JournalArticleLocalService, IdentifiableBean {
+	extends BaseLocalServiceImpl implements JournalArticleLocalService,
+		IdentifiableBean {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -178,6 +186,11 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	public JournalArticle deleteJournalArticle(JournalArticle journalArticle)
 		throws SystemException {
 		return journalArticlePersistence.remove(journalArticle);
+	}
+
+	public DynamicQuery dynamicQuery() {
+		return DynamicQueryFactoryUtil.forClass(JournalArticle.class,
+			getClassLoader());
 	}
 
 	/**
@@ -601,6 +614,81 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	 */
 	public void setJournalFeedFinder(JournalFeedFinder journalFeedFinder) {
 		this.journalFeedFinder = journalFeedFinder;
+	}
+
+	/**
+	 * Returns the journal folder local service.
+	 *
+	 * @return the journal folder local service
+	 */
+	public JournalFolderLocalService getJournalFolderLocalService() {
+		return journalFolderLocalService;
+	}
+
+	/**
+	 * Sets the journal folder local service.
+	 *
+	 * @param journalFolderLocalService the journal folder local service
+	 */
+	public void setJournalFolderLocalService(
+		JournalFolderLocalService journalFolderLocalService) {
+		this.journalFolderLocalService = journalFolderLocalService;
+	}
+
+	/**
+	 * Returns the journal folder remote service.
+	 *
+	 * @return the journal folder remote service
+	 */
+	public JournalFolderService getJournalFolderService() {
+		return journalFolderService;
+	}
+
+	/**
+	 * Sets the journal folder remote service.
+	 *
+	 * @param journalFolderService the journal folder remote service
+	 */
+	public void setJournalFolderService(
+		JournalFolderService journalFolderService) {
+		this.journalFolderService = journalFolderService;
+	}
+
+	/**
+	 * Returns the journal folder persistence.
+	 *
+	 * @return the journal folder persistence
+	 */
+	public JournalFolderPersistence getJournalFolderPersistence() {
+		return journalFolderPersistence;
+	}
+
+	/**
+	 * Sets the journal folder persistence.
+	 *
+	 * @param journalFolderPersistence the journal folder persistence
+	 */
+	public void setJournalFolderPersistence(
+		JournalFolderPersistence journalFolderPersistence) {
+		this.journalFolderPersistence = journalFolderPersistence;
+	}
+
+	/**
+	 * Returns the journal folder finder.
+	 *
+	 * @return the journal folder finder
+	 */
+	public JournalFolderFinder getJournalFolderFinder() {
+		return journalFolderFinder;
+	}
+
+	/**
+	 * Sets the journal folder finder.
+	 *
+	 * @param journalFolderFinder the journal folder finder
+	 */
+	public void setJournalFolderFinder(JournalFolderFinder journalFolderFinder) {
+		this.journalFolderFinder = journalFolderFinder;
 	}
 
 	/**
@@ -1402,6 +1490,24 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the asset link finder.
+	 *
+	 * @return the asset link finder
+	 */
+	public AssetLinkFinder getAssetLinkFinder() {
+		return assetLinkFinder;
+	}
+
+	/**
+	 * Sets the asset link finder.
+	 *
+	 * @param assetLinkFinder the asset link finder
+	 */
+	public void setAssetLinkFinder(AssetLinkFinder assetLinkFinder) {
+		this.assetLinkFinder = assetLinkFinder;
+	}
+
+	/**
 	 * Returns the asset tag local service.
 	 *
 	 * @return the asset tag local service
@@ -1688,12 +1794,6 @@ public abstract class JournalArticleLocalServiceBaseImpl
 		_beanIdentifier = beanIdentifier;
 	}
 
-	protected ClassLoader getClassLoader() {
-		Class<?> clazz = getClass();
-
-		return clazz.getClassLoader();
-	}
-
 	protected Class<?> getModelClass() {
 		return JournalArticle.class;
 	}
@@ -1749,6 +1849,14 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	protected JournalFeedPersistence journalFeedPersistence;
 	@BeanReference(type = JournalFeedFinder.class)
 	protected JournalFeedFinder journalFeedFinder;
+	@BeanReference(type = JournalFolderLocalService.class)
+	protected JournalFolderLocalService journalFolderLocalService;
+	@BeanReference(type = JournalFolderService.class)
+	protected JournalFolderService journalFolderService;
+	@BeanReference(type = JournalFolderPersistence.class)
+	protected JournalFolderPersistence journalFolderPersistence;
+	@BeanReference(type = JournalFolderFinder.class)
+	protected JournalFolderFinder journalFolderFinder;
 	@BeanReference(type = JournalStructureLocalService.class)
 	protected JournalStructureLocalService journalStructureLocalService;
 	@BeanReference(type = JournalStructureService.class)
@@ -1835,6 +1943,8 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	protected AssetLinkLocalService assetLinkLocalService;
 	@BeanReference(type = AssetLinkPersistence.class)
 	protected AssetLinkPersistence assetLinkPersistence;
+	@BeanReference(type = AssetLinkFinder.class)
+	protected AssetLinkFinder assetLinkFinder;
 	@BeanReference(type = AssetTagLocalService.class)
 	protected AssetTagLocalService assetTagLocalService;
 	@BeanReference(type = AssetTagService.class)

@@ -90,6 +90,10 @@ public class CalEventLocalServiceUtil {
 		return getService().deleteCalEvent(calEvent);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*
@@ -339,17 +343,18 @@ public class CalEventLocalServiceUtil {
 		getService().checkEvents();
 	}
 
-	public static void deleteEvent(
+	public static com.liferay.portlet.calendar.model.CalEvent deleteEvent(
 		com.liferay.portlet.calendar.model.CalEvent event)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteEvent(event);
+		return getService().deleteEvent(event);
 	}
 
-	public static void deleteEvent(long eventId)
+	public static com.liferay.portlet.calendar.model.CalEvent deleteEvent(
+		long eventId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteEvent(eventId);
+		return getService().deleteEvent(eventId);
 	}
 
 	public static void deleteEvents(long groupId)

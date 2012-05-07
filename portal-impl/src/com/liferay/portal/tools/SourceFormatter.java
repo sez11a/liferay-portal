@@ -577,18 +577,18 @@ public class SourceFormatter {
 			previousJavaTermName.toLowerCase();
 
 		if (fileName.contains("persistence") &&
-			(previousJavaTermName.startsWith("doCount") &&
-			 javaTermName.startsWith("doCount")) ||
-			(previousJavaTermName.startsWith("doFind") &&
-			 javaTermName.startsWith("doFind")) ||
-			(previousJavaTermNameLowerCase.startsWith("count") &&
-			 javaTermNameLowerCase.startsWith("count")) ||
-			(previousJavaTermNameLowerCase.startsWith("filter") &&
-			 javaTermNameLowerCase.startsWith("filter")) ||
-			(previousJavaTermNameLowerCase.startsWith("find") &&
-			 javaTermNameLowerCase.startsWith("find")) ||
-			(previousJavaTermNameLowerCase.startsWith("join") &&
-			 javaTermNameLowerCase.startsWith("join"))) {
+			((previousJavaTermName.startsWith("doCount") &&
+			  javaTermName.startsWith("doCount")) ||
+			 (previousJavaTermName.startsWith("doFind") &&
+			  javaTermName.startsWith("doFind")) ||
+			 (previousJavaTermNameLowerCase.startsWith("count") &&
+			  javaTermNameLowerCase.startsWith("count")) ||
+			 (previousJavaTermNameLowerCase.startsWith("filter") &&
+			  javaTermNameLowerCase.startsWith("filter")) ||
+			 (previousJavaTermNameLowerCase.startsWith("find") &&
+			  javaTermNameLowerCase.startsWith("find")) ||
+			 (previousJavaTermNameLowerCase.startsWith("join") &&
+			  javaTermNameLowerCase.startsWith("join")))) {
 
 			return;
 		}
@@ -1221,7 +1221,8 @@ public class SourceFormatter {
 				_sourceFormatterHelper.printError(fileName, "}: " + fileName);
 			}
 
-			if (portalJavaFiles && className.endsWith("ServiceImpl") &&
+			if (portalJavaFiles && !className.equals("BaseServiceImpl") &&
+				className.endsWith("ServiceImpl") &&
 				newContent.contains("ServiceUtil.")) {
 
 				_sourceFormatterHelper.printError(
@@ -1266,6 +1267,8 @@ public class SourceFormatter {
 
 		String ifClause = StringPool.BLANK;
 
+		String packageName = StringPool.BLANK;
+
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
 
@@ -1283,6 +1286,22 @@ public class SourceFormatter {
 				new String[] {
 					"* Copyright (c) 2000-2012 Liferay, Inc."
 				});
+
+			if (line.startsWith("package ")) {
+				packageName = line.substring(8, line.length() - 1);
+			}
+
+			if (line.startsWith("import ")) {
+				int pos = line.lastIndexOf(StringPool.PERIOD);
+
+				if (pos != -1) {
+					String importPackageName = line.substring(7, pos);
+
+					if (importPackageName.equals(packageName)) {
+						continue;
+					}
+				}
+			}
 
 			if (line.startsWith(StringPool.SPACE) && !line.startsWith(" *")) {
 				if (!line.startsWith(StringPool.FOUR_SPACES)) {
@@ -1589,6 +1608,20 @@ public class SourceFormatter {
 					 (lineToSkipIfEmpty != (lineCount - 1)))) {
 
 					sb.append(previousLine);
+
+					if (previousLine.endsWith(
+							StringPool.TAB + StringPool.CLOSE_CURLY_BRACE) &&
+						Validator.isNotNull(trimmedLine) &&
+						!trimmedLine.equals(");") &&
+						!trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
+						!trimmedLine.startsWith("catch ") &&
+						!trimmedLine.startsWith("else ") &&
+						!trimmedLine.startsWith("finally ") &&
+						!trimmedLine.startsWith("while ")) {
+
+						sb.append("\n");
+					}
+
 					sb.append("\n");
 				}
 
@@ -2864,6 +2897,7 @@ public class SourceFormatter {
 			"**\\service\\**\\service\\persistence\\*Persistence.java",
 			"**\\service\\**\\service\\persistence\\*Util.java",
 			"**\\service\\base\\*ServiceBaseImpl.java",
+			"**\\service\\base\\*ServiceClpInvoker.java",
 			"**\\service\\http\\*JSONSerializer.java",
 			"**\\service\\http\\*ServiceHttp.java",
 			"**\\service\\http\\*ServiceJSON.java",
@@ -2932,6 +2966,7 @@ public class SourceFormatter {
 				"**\\com\\liferay\\portal\\service\\ServiceContext*.java",
 				"**\\model\\BaseModel.java",
 				"**\\model\\impl\\BaseModelImpl.java",
+				"**\\service\\Base*.java",
 				"**\\service\\PersistedModelLocalService*.java",
 				"**\\service\\base\\PrincipalBean.java",
 				"**\\service\\http\\*HttpTest.java",

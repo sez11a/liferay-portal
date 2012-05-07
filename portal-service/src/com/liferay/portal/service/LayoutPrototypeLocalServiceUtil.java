@@ -92,6 +92,10 @@ public class LayoutPrototypeLocalServiceUtil {
 		return getService().deleteLayoutPrototype(layoutPrototype);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*
@@ -276,11 +280,21 @@ public class LayoutPrototypeLocalServiceUtil {
 			active);
 	}
 
+	/**
+	* @deprecated {@link #getLayoutPrototypeByUuidAndCompanyId(String, long)}
+	*/
 	public static com.liferay.portal.model.LayoutPrototype getLayoutPrototypeByUuid(
 		java.lang.String uuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getLayoutPrototypeByUuid(uuid);
+	}
+
+	public static com.liferay.portal.model.LayoutPrototype getLayoutPrototypeByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLayoutPrototypeByUuidAndCompanyId(uuid, companyId);
 	}
 
 	public static java.util.List<com.liferay.portal.model.LayoutPrototype> search(

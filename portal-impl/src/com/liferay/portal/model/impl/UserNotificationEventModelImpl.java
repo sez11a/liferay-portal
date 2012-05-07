@@ -33,6 +33,9 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * The base model implementation for the UserNotificationEvent service. Represents a row in the &quot;UserNotificationEvent&quot; database table, with each column mapped to a property of this class.
  *
@@ -82,8 +85,9 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.UserNotificationEvent"),
 			true);
 	public static long ARCHIVED_COLUMN_BITMASK = 1L;
-	public static long USERID_COLUMN_BITMASK = 2L;
-	public static long UUID_COLUMN_BITMASK = 4L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long USERID_COLUMN_BITMASK = 4L;
+	public static long UUID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.UserNotificationEvent"));
 
@@ -112,6 +116,81 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	public String getModelClassName() {
 		return UserNotificationEvent.class.getName();
+	}
+
+	@Override
+	public Map<String, Object> getModelAttributes() {
+		Map<String, Object> attributes = new HashMap<String, Object>();
+
+		attributes.put("uuid", getUuid());
+		attributes.put("userNotificationEventId", getUserNotificationEventId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("type", getType());
+		attributes.put("timestamp", getTimestamp());
+		attributes.put("deliverBy", getDeliverBy());
+		attributes.put("payload", getPayload());
+		attributes.put("archived", getArchived());
+
+		return attributes;
+	}
+
+	@Override
+	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
+		Long userNotificationEventId = (Long)attributes.get(
+				"userNotificationEventId");
+
+		if (userNotificationEventId != null) {
+			setUserNotificationEventId(userNotificationEventId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
+		}
+
+		Long timestamp = (Long)attributes.get("timestamp");
+
+		if (timestamp != null) {
+			setTimestamp(timestamp);
+		}
+
+		Long deliverBy = (Long)attributes.get("deliverBy");
+
+		if (deliverBy != null) {
+			setDeliverBy(deliverBy);
+		}
+
+		String payload = (String)attributes.get("payload");
+
+		if (payload != null) {
+			setPayload(payload);
+		}
+
+		Boolean archived = (Boolean)attributes.get("archived");
+
+		if (archived != null) {
+			setArchived(archived);
+		}
 	}
 
 	public String getUuid() {
@@ -148,7 +227,19 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getUserId() {
@@ -354,6 +445,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 		userNotificationEventModelImpl._originalUuid = userNotificationEventModelImpl._uuid;
 
+		userNotificationEventModelImpl._originalCompanyId = userNotificationEventModelImpl._companyId;
+
+		userNotificationEventModelImpl._setOriginalCompanyId = false;
+
 		userNotificationEventModelImpl._originalUserId = userNotificationEventModelImpl._userId;
 
 		userNotificationEventModelImpl._setOriginalUserId = false;
@@ -492,6 +587,8 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	private String _originalUuid;
 	private long _userNotificationEventId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private long _originalUserId;

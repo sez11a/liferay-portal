@@ -21,12 +21,14 @@ import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.UserLocalService;
@@ -55,6 +57,7 @@ import com.liferay.portlet.asset.service.persistence.AssetCategoryPropertyFinder
 import com.liferay.portlet.asset.service.persistence.AssetCategoryPropertyPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetEntryFinder;
 import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
+import com.liferay.portlet.asset.service.persistence.AssetLinkFinder;
 import com.liferay.portlet.asset.service.persistence.AssetLinkPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetTagFinder;
 import com.liferay.portlet.asset.service.persistence.AssetTagPersistence;
@@ -83,7 +86,7 @@ import javax.sql.DataSource;
  * @see com.liferay.portlet.asset.service.AssetTagLocalServiceUtil
  * @generated
  */
-public abstract class AssetTagLocalServiceBaseImpl
+public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	implements AssetTagLocalService, IdentifiableBean {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -139,6 +142,10 @@ public abstract class AssetTagLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	public AssetTag deleteAssetTag(AssetTag assetTag) throws SystemException {
 		return assetTagPersistence.remove(assetTag);
+	}
+
+	public DynamicQuery dynamicQuery() {
+		return DynamicQueryFactoryUtil.forClass(AssetTag.class, getClassLoader());
 	}
 
 	/**
@@ -544,6 +551,24 @@ public abstract class AssetTagLocalServiceBaseImpl
 	public void setAssetLinkPersistence(
 		AssetLinkPersistence assetLinkPersistence) {
 		this.assetLinkPersistence = assetLinkPersistence;
+	}
+
+	/**
+	 * Returns the asset link finder.
+	 *
+	 * @return the asset link finder
+	 */
+	public AssetLinkFinder getAssetLinkFinder() {
+		return assetLinkFinder;
+	}
+
+	/**
+	 * Sets the asset link finder.
+	 *
+	 * @param assetLinkFinder the asset link finder
+	 */
+	public void setAssetLinkFinder(AssetLinkFinder assetLinkFinder) {
+		this.assetLinkFinder = assetLinkFinder;
 	}
 
 	/**
@@ -965,12 +990,6 @@ public abstract class AssetTagLocalServiceBaseImpl
 		_beanIdentifier = beanIdentifier;
 	}
 
-	protected ClassLoader getClassLoader() {
-		Class<?> clazz = getClass();
-
-		return clazz.getClassLoader();
-	}
-
 	protected Class<?> getModelClass() {
 		return AssetTag.class;
 	}
@@ -1026,6 +1045,8 @@ public abstract class AssetTagLocalServiceBaseImpl
 	protected AssetLinkLocalService assetLinkLocalService;
 	@BeanReference(type = AssetLinkPersistence.class)
 	protected AssetLinkPersistence assetLinkPersistence;
+	@BeanReference(type = AssetLinkFinder.class)
+	protected AssetLinkFinder assetLinkFinder;
 	@BeanReference(type = AssetTagLocalService.class)
 	protected AssetTagLocalService assetTagLocalService;
 	@BeanReference(type = AssetTagService.class)

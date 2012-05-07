@@ -110,8 +110,8 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.pwd.PwdAuthenticator;
 import com.liferay.portal.security.pwd.PwdEncryptor;
 import com.liferay.portal.security.pwd.PwdToolkitUtil;
+import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.base.PrincipalBean;
 import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
 import com.liferay.portal.spring.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -2607,16 +2607,40 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	/**
 	 * Returns the user with the universally unique identifier.
 	 *
-	 * @param  uuid the user's universally unique identifier
-	 * @return the user with the universally unique identifier
-	 * @throws PortalException if a user with the universally unique identifier
-	 *         could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @param      uuid the user's universally unique identifier
+	 * @return     the user with the universally unique identifier
+	 * @throws     PortalException if a user with the universally unique
+	 *             identifier could not be found
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated {@link #getUserByUuidAndCompanyId(String, long)}
 	 */
 	public User getUserByUuid(String uuid)
 		throws PortalException, SystemException {
 
 		List<User> users = userPersistence.findByUuid(uuid);
+
+		if (users.isEmpty()) {
+			throw new NoSuchUserException();
+		}
+		else {
+			return users.get(0);
+		}
+	}
+
+	/**
+	 * Returns the user with the universally unique identifier.
+	 *
+	 * @param  uuid the user's universally unique identifier
+	 * @param  companyId the primary key of the user's company
+	 * @return the user with the universally unique identifier
+	 * @throws PortalException if a user with the universally unique identifier
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public User getUserByUuidAndCompanyId(String uuid, long companyId)
+		throws PortalException, SystemException {
+
+		List<User> users = userPersistence.findByUuid_C(uuid, companyId);
 
 		if (users.isEmpty()) {
 			throw new NoSuchUserException();
@@ -5779,7 +5803,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		String[] anonymousNames = PrincipalBean.ANONYMOUS_NAMES;
+		String[] anonymousNames = BaseServiceImpl.ANONYMOUS_NAMES;
 
 		for (String anonymousName : anonymousNames) {
 			if (screenName.equalsIgnoreCase(anonymousName)) {

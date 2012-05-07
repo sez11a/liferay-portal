@@ -1275,23 +1275,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	public boolean hasLayoutSetPrototypeLayout(
-			long layoutSetPrototypeId, String layoutUuid)
+			String layoutSetPrototypeUuid, String layoutUuid, long companyId)
 		throws PortalException, SystemException {
 
 		LayoutSetPrototype layoutSetPrototype =
-			layoutSetPrototypeLocalService.getLayoutSetPrototype(
-				layoutSetPrototypeId);
-
-		return hasLayoutSetPrototypeLayout(layoutSetPrototype, layoutUuid);
-	}
-
-	public boolean hasLayoutSetPrototypeLayout(
-			String layoutSetPrototypeUuid, String layoutUuid)
-		throws PortalException, SystemException {
-
-		LayoutSetPrototype layoutSetPrototype =
-			layoutSetPrototypeLocalService.getLayoutSetPrototypeByUuid(
-				layoutSetPrototypeUuid);
+			layoutSetPrototypeLocalService.
+				getLayoutSetPrototypeByUuidAndCompanyId(
+					layoutSetPrototypeUuid, companyId);
 
 		return hasLayoutSetPrototypeLayout(layoutSetPrototype, layoutUuid);
 	}
@@ -1989,6 +1979,32 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layoutPersistence.update(layout, false);
 
 		return layout;
+	}
+
+	/**
+	 * Updates the priorities of the layouts.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @throws PortalException if a matching layout could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void updatePriorities(long groupId, boolean privateLayout)
+		throws PortalException, SystemException {
+
+		List<Layout> layouts = layoutPersistence.findByG_P(
+			groupId, privateLayout);
+
+		for (Layout layout : layouts) {
+			int nextPriority = getNextPriority(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getParentLayoutId(),
+				layout.getSourcePrototypeLayoutUuid(), layout.getPriority());
+
+			layout.setPriority(nextPriority);
+
+			layoutPersistence.update(layout, false);
+		}
 	}
 
 	/**

@@ -38,7 +38,9 @@ import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The base model implementation for the JournalFeed service. Represents a row in the &quot;JournalFeed&quot; database table, with each column mapped to a property of this class.
@@ -103,9 +105,10 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.journal.model.JournalFeed"),
 			true);
-	public static long FEEDID_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long UUID_COLUMN_BITMASK = 4L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long FEEDID_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long UUID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -189,6 +192,179 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		return JournalFeed.class.getName();
 	}
 
+	@Override
+	public Map<String, Object> getModelAttributes() {
+		Map<String, Object> attributes = new HashMap<String, Object>();
+
+		attributes.put("uuid", getUuid());
+		attributes.put("id", getId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("feedId", getFeedId());
+		attributes.put("name", getName());
+		attributes.put("description", getDescription());
+		attributes.put("type", getType());
+		attributes.put("structureId", getStructureId());
+		attributes.put("templateId", getTemplateId());
+		attributes.put("rendererTemplateId", getRendererTemplateId());
+		attributes.put("delta", getDelta());
+		attributes.put("orderByCol", getOrderByCol());
+		attributes.put("orderByType", getOrderByType());
+		attributes.put("targetLayoutFriendlyUrl", getTargetLayoutFriendlyUrl());
+		attributes.put("targetPortletId", getTargetPortletId());
+		attributes.put("contentField", getContentField());
+		attributes.put("feedType", getFeedType());
+		attributes.put("feedVersion", getFeedVersion());
+
+		return attributes;
+	}
+
+	@Override
+	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
+		Long id = (Long)attributes.get("id");
+
+		if (id != null) {
+			setId(id);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
+		}
+
+		String feedId = (String)attributes.get("feedId");
+
+		if (feedId != null) {
+			setFeedId(feedId);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
+		}
+
+		String structureId = (String)attributes.get("structureId");
+
+		if (structureId != null) {
+			setStructureId(structureId);
+		}
+
+		String templateId = (String)attributes.get("templateId");
+
+		if (templateId != null) {
+			setTemplateId(templateId);
+		}
+
+		String rendererTemplateId = (String)attributes.get("rendererTemplateId");
+
+		if (rendererTemplateId != null) {
+			setRendererTemplateId(rendererTemplateId);
+		}
+
+		Integer delta = (Integer)attributes.get("delta");
+
+		if (delta != null) {
+			setDelta(delta);
+		}
+
+		String orderByCol = (String)attributes.get("orderByCol");
+
+		if (orderByCol != null) {
+			setOrderByCol(orderByCol);
+		}
+
+		String orderByType = (String)attributes.get("orderByType");
+
+		if (orderByType != null) {
+			setOrderByType(orderByType);
+		}
+
+		String targetLayoutFriendlyUrl = (String)attributes.get(
+				"targetLayoutFriendlyUrl");
+
+		if (targetLayoutFriendlyUrl != null) {
+			setTargetLayoutFriendlyUrl(targetLayoutFriendlyUrl);
+		}
+
+		String targetPortletId = (String)attributes.get("targetPortletId");
+
+		if (targetPortletId != null) {
+			setTargetPortletId(targetPortletId);
+		}
+
+		String contentField = (String)attributes.get("contentField");
+
+		if (contentField != null) {
+			setContentField(contentField);
+		}
+
+		String feedType = (String)attributes.get("feedType");
+
+		if (feedType != null) {
+			setFeedType(feedType);
+		}
+
+		Double feedVersion = (Double)attributes.get("feedVersion");
+
+		if (feedVersion != null) {
+			setFeedVersion(feedVersion);
+		}
+	}
+
 	@JSON
 	public String getUuid() {
 		if (_uuid == null) {
@@ -247,7 +423,19 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -624,6 +812,10 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 		journalFeedModelImpl._setOriginalGroupId = false;
 
+		journalFeedModelImpl._originalCompanyId = journalFeedModelImpl._companyId;
+
+		journalFeedModelImpl._setOriginalCompanyId = false;
+
 		journalFeedModelImpl._originalFeedId = journalFeedModelImpl._feedId;
 
 		journalFeedModelImpl._columnBitmask = 0;
@@ -958,6 +1150,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

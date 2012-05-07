@@ -39,6 +39,24 @@ public class OrganizationServiceUtil {
 	 */
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
 	* Adds the organizations to the group.
 	*
 	* @param groupId the primary key of the group
@@ -245,7 +263,8 @@ public class OrganizationServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static long getOrganizationId(long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getOrganizationId(companyId, name);
 	}
 

@@ -99,6 +99,8 @@ public interface PropsKeys {
 
 	public static final String ASSET_PUBLISHER_DISPLAY_STYLES = "asset.publisher.display.styles";
 
+	public static final String ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_CONTENT = "asset.publisher.display.styles.template.content";
+
 	public static final String ASSET_RENDERER_ENABLED = "asset.renderer.enabled.";
 
 	public static final String ASSET_TAG_PROPERTIES_DEFAULT = "asset.tag.properties.default";
@@ -214,6 +216,8 @@ public interface PropsKeys {
 	public static final String BLOGS_ENTRY_COMMENTS_ENABLED = "blogs.entry.comments.enabled";
 
 	public static final String BLOGS_ENTRY_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED = "blogs.entry.previous.and.next.navigation.enabled";
+
+	public static final String BLOGS_ENTRY_URL_TITLE_REGEXP = "blogs.entry.url.title.regexp";
 
 	public static final String BLOGS_IMAGE_EXTENSIONS = "blogs.image.extensions";
 
@@ -419,6 +423,8 @@ public interface PropsKeys {
 
 	public static final String CUSTOM_SQL_FUNCTION_ISNULL = "custom.sql.function.isnull";
 
+	public static final String DATABASE_INDEXES_UPDATE_ON_STARTUP = "database.indexes.update.on.startup";
+
 	public static final String DATABASE_MYSQL_ENGINE = "database.mysql.engine";
 
 	public static final String DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX = "default.admin.email.address.prefix";
@@ -529,9 +535,15 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_DRAFTS_ENABLED = "dl.file.entry.drafts.enabled";
 
+	public static final String DL_FILE_ENTRY_PREVIEW_AUDIO = "dl.file.entry.preview.audio.";
+
+	public static final String DL_FILE_ENTRY_PREVIEW_AUDIO_BIT_RATE = "dl.file.entry.preview.audio.bit.rate";
+
 	public static final String DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS = "dl.file.entry.preview.audio.containers";
 
 	public static final String DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES = "dl.file.entry.preview.audio.mime.types";
+
+	public static final String DL_FILE_ENTRY_PREVIEW_AUDIO_SAMPLE_RATE = "dl.file.entry.preview.audio.sample.rate";
 
 	public static final String DL_FILE_ENTRY_PREVIEW_DOCUMENT_DEPTH = "dl.file.entry.preview.document.depth";
 
@@ -839,6 +851,8 @@ public interface PropsKeys {
 
 	public static final String INVOKER_FILTER_CHAIN_SIZE = "invoker.filter.chain.cache.size";
 
+	public static final String JAVADOC_MANAGER_ENABLED = "javadoc.manager.enabled";
+
 	public static final String JAVASCRIPT_BAREBONE_ENABLED = "javascript.barebone.enabled";
 
 	public static final String JAVASCRIPT_BAREBONE_FILES = "javascript.barebone.files";
@@ -908,6 +922,8 @@ public interface PropsKeys {
 	public static final String JOURNAL_ARTICLE_TOKEN_PAGE_BREAK = "journal.article.token.page.break";
 
 	public static final String JOURNAL_ARTICLE_TYPES = "journal.article.types";
+
+	public static final String JOURNAL_ARTICLE_URL_TITLE_REGEXP = "journal.article.url.title.regexp";
 
 	public static final String JOURNAL_ARTICLE_VIEW_PERMISSION_CHECK_ENABLED = "journal.article.view.permission.check.enabled";
 
@@ -2050,6 +2066,8 @@ public interface PropsKeys {
 	public static final String TRANSLATIONS_DISABLED = "translations.disabled";
 
 	public static final String TRANSLATOR_DEFAULT_LANGUAGES = "translator.default.languages";
+
+	public static final String TRASH_SEARCH_LIMIT = "trash.search.limit";
 
 	public static final String UPGRADE_PROCESSES = "upgrade.processes";
 

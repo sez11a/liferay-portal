@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.service.ServiceContext;
@@ -217,6 +218,15 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 							parameterTypeName);
 					}
 
+					if (!ReflectUtil.isSubclass(
+							parameterType, methodParameters[i].getType())) {
+
+						throw new IllegalArgumentException(
+							"Unmatched argument type " +
+								parameterType.getName() +
+									" for method argument " + i);
+					}
+
 					parameterValue = _createDefaultParameterValue(
 						parameterName, parameterType);
 				}
@@ -224,12 +234,13 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					Calendar calendar = Calendar.getInstance();
 
 					calendar.setLenient(false);
-					calendar.setTimeInMillis(Long.parseLong(value.toString()));
+					calendar.setTimeInMillis(
+						GetterUtil.getLong(value.toString()));
 
 					parameterValue = calendar;
 				}
 				else if (parameterType.equals(List.class)) {
-					List<?> list = JSONFactoryUtil.looseDeserialize(
+					List<?> list = JSONFactoryUtil.looseDeserializeSafe(
 						value.toString(), ArrayList.class);
 
 					list = _generifyList(
@@ -242,7 +253,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 						value.toString());
 				}
 				else if (parameterType.equals(Map.class)) {
-					Map<?, ?> map = JSONFactoryUtil.looseDeserialize(
+					Map<?, ?> map = JSONFactoryUtil.looseDeserializeSafe(
 						value.toString(), HashMap.class);
 
 					map = _generifyMap(

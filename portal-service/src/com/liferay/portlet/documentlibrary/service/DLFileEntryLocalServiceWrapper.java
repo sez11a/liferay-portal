@@ -84,6 +84,10 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		return _dlFileEntryLocalService.deleteDLFileEntry(dlFileEntry);
 	}
 
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _dlFileEntryLocalService.dynamicQuery();
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*
@@ -395,16 +399,32 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		_dlFileEntryLocalService.deleteFileEntries(groupId, folderId);
 	}
 
-	public void deleteFileEntry(long fileEntryId)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry deleteFileEntry(
+		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_dlFileEntryLocalService.deleteFileEntry(fileEntryId);
+		return _dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
 	}
 
-	public void deleteFileEntry(long userId, long fileEntryId)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry deleteFileEntry(
+		long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_dlFileEntryLocalService.deleteFileEntry(userId, fileEntryId);
+		return _dlFileEntryLocalService.deleteFileEntry(fileEntryId);
+	}
+
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry deleteFileEntry(
+		long userId, long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.deleteFileEntry(userId, fileEntryId);
+	}
+
+	public void deleteFileVersion(long userId, long fileEntryId,
+		java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryLocalService.deleteFileVersion(userId, fileEntryId, version);
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByAnyImageId(
@@ -463,6 +483,12 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryLocalService.getFileEntries(start, end);
+	}
+
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
+		long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getFileEntries(groupId, folderId);
 	}
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(

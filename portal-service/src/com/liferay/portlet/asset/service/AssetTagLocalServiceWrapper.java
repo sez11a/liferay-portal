@@ -82,6 +82,10 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 		return _assetTagLocalService.deleteAssetTag(assetTag);
 	}
 
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _assetTagLocalService.dynamicQuery();
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*
@@ -365,6 +369,12 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getTagIds(groupId, names);
+	}
+
+	public long[] getTagIds(long[] groupIds, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagLocalService.getTagIds(groupIds, name);
 	}
 
 	public long[] getTagIds(long[] groupIds, java.lang.String[] names)

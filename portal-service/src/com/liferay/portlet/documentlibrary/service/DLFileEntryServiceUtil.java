@@ -37,6 +37,25 @@ public class DLFileEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLFileEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry addFileEntry(
 		long groupId, long repositoryId, long folderId,
 		java.lang.String sourceFileName, java.lang.String mimeType,
@@ -135,6 +154,13 @@ public class DLFileEntryServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteFileEntry(groupId, folderId, title);
+	}
+
+	public static void deleteFileVersion(long fileEntryId,
+		java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFileVersion(fileEntryId, version);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByImageId(
@@ -303,10 +329,11 @@ public class DLFileEntryServiceUtil {
 	}
 
 	public static com.liferay.portal.model.Lock refreshFileEntryLock(
-		java.lang.String lockUuid, long expirationTime)
+		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().refreshFileEntryLock(lockUuid, expirationTime);
+		return getService()
+				   .refreshFileEntryLock(lockUuid, companyId, expirationTime);
 	}
 
 	public static void revertFileEntry(long fileEntryId,

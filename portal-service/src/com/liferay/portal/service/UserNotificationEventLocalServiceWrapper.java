@@ -83,6 +83,10 @@ public class UserNotificationEventLocalServiceWrapper
 		return _userNotificationEventLocalService.deleteUserNotificationEvent(userNotificationEvent);
 	}
 
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _userNotificationEventLocalService.dynamicQuery();
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*
@@ -288,15 +292,18 @@ public class UserNotificationEventLocalServiceWrapper
 			notificationEvents);
 	}
 
-	public void deleteUserNotificationEvent(java.lang.String uuid)
+	public void deleteUserNotificationEvent(java.lang.String uuid,
+		long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_userNotificationEventLocalService.deleteUserNotificationEvent(uuid);
+		_userNotificationEventLocalService.deleteUserNotificationEvent(uuid,
+			companyId);
 	}
 
 	public void deleteUserNotificationEvents(
-		java.util.Collection<java.lang.String> uuids)
+		java.util.Collection<java.lang.String> uuids, long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_userNotificationEventLocalService.deleteUserNotificationEvents(uuids);
+		_userNotificationEventLocalService.deleteUserNotificationEvents(uuids,
+			companyId);
 	}
 
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
@@ -337,17 +344,18 @@ public class UserNotificationEventLocalServiceWrapper
 	}
 
 	public com.liferay.portal.model.UserNotificationEvent updateUserNotificationEvent(
-		java.lang.String uuid, boolean archive)
+		java.lang.String uuid, long companyId, boolean archive)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _userNotificationEventLocalService.updateUserNotificationEvent(uuid,
-			archive);
+			companyId, archive);
 	}
 
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> updateUserNotificationEvents(
-		java.util.Collection<java.lang.String> uuids, boolean archive)
+		java.util.Collection<java.lang.String> uuids, long companyId,
+		boolean archive)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _userNotificationEventLocalService.updateUserNotificationEvents(uuids,
-			archive);
+			companyId, archive);
 	}
 
 	/**

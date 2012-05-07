@@ -35,7 +35,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
  */
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface UserLocalService extends PersistedModelLocalService {
+public interface UserLocalService extends BaseLocalService,
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -85,6 +86,8 @@ public interface UserLocalService extends PersistedModelLocalService {
 		com.liferay.portal.model.User user)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -1465,12 +1468,29 @@ public interface UserLocalService extends PersistedModelLocalService {
 	*
 	* @param uuid the user's universally unique identifier
 	* @return the user with the universally unique identifier
+	* @throws PortalException if a user with the universally unique
+	identifier could not be found
+	* @throws SystemException if a system exception occurred
+	* @deprecated {@link #getUserByUuidAndCompanyId(String, long)}
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.User getUserByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the user with the universally unique identifier.
+	*
+	* @param uuid the user's universally unique identifier
+	* @param companyId the primary key of the user's company
+	* @return the user with the universally unique identifier
 	* @throws PortalException if a user with the universally unique identifier
 	could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserByUuid(java.lang.String uuid)
+	public com.liferay.portal.model.User getUserByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

@@ -90,6 +90,10 @@ public class SCProductEntryLocalServiceUtil {
 		return getService().deleteSCProductEntry(scProductEntry);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*
@@ -324,17 +328,18 @@ public class SCProductEntryLocalServiceUtil {
 		getService().deleteProductEntries(groupId);
 	}
 
-	public static void deleteProductEntry(long productEntryId)
+	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteProductEntry(
+		long productEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteProductEntry(productEntryId);
+		return getService().deleteProductEntry(productEntryId);
 	}
 
-	public static void deleteProductEntry(
+	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteProductEntry(
 		com.liferay.portlet.softwarecatalog.model.SCProductEntry productEntry)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteProductEntry(productEntry);
+		return getService().deleteProductEntry(productEntry);
 	}
 
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getCompanyProductEntries(

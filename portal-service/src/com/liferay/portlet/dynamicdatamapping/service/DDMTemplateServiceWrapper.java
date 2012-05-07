@@ -31,6 +31,24 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 		_ddmTemplateService = ddmTemplateService;
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier() {
+		return _ddmTemplateService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_ddmTemplateService.setBeanIdentifier(beanIdentifier);
+	}
+
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
 		long groupId, long classNameId, long classPK,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -65,6 +83,12 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateService.getTemplate(templateId);
+	}
+
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
+		long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmTemplateService.getTemplates(groupId, classNameId, classPK);
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(

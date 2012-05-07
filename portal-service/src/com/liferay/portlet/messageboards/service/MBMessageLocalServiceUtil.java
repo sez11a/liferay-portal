@@ -90,6 +90,10 @@ public class MBMessageLocalServiceUtil {
 		return getService().deleteMBMessage(mbMessage);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*
@@ -368,10 +372,11 @@ public class MBMessageLocalServiceUtil {
 			.addMessageResources(message, groupPermissions, guestPermissions);
 	}
 
-	public static void deleteDiscussionMessage(long messageId)
+	public static com.liferay.portlet.messageboards.model.MBMessage deleteDiscussionMessage(
+		long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteDiscussionMessage(messageId);
+		return getService().deleteDiscussionMessage(messageId);
 	}
 
 	public static void deleteDiscussionMessages(java.lang.String className,
@@ -381,17 +386,18 @@ public class MBMessageLocalServiceUtil {
 		getService().deleteDiscussionMessages(className, classPK);
 	}
 
-	public static void deleteMessage(long messageId)
+	public static com.liferay.portlet.messageboards.model.MBMessage deleteMessage(
+		long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteMessage(messageId);
+		return getService().deleteMessage(messageId);
 	}
 
-	public static void deleteMessage(
+	public static com.liferay.portlet.messageboards.model.MBMessage deleteMessage(
 		com.liferay.portlet.messageboards.model.MBMessage message)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteMessage(message);
+		return getService().deleteMessage(message);
 	}
 
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCategoryMessages(

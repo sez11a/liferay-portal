@@ -39,6 +39,24 @@ public class GroupServiceUtil {
 	 */
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
 	* Adds a group.
 	*
 	* @param liveGroupId the primary key of the live group
@@ -372,7 +390,8 @@ public class GroupServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static boolean hasUserGroup(long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService().hasUserGroup(userId, groupId);
 	}
 

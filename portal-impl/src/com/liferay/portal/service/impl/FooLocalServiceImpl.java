@@ -34,9 +34,7 @@ import java.util.List;
 public class FooLocalServiceImpl {
 
 	/**
-	 * Add foo
-	 *
-	 * This method handles the creation and bookkeeping of the foo including its resources,
+	 * Handles the creation and bookkeeping of the foo. This including its resources,
 	 * metadata, and internal data structures. It is not necessary to make a subsequent call
 	 * to addFooResources(long, String).
 	 *
@@ -52,7 +50,7 @@ public class FooLocalServiceImpl {
 	 * @param  comments the comments about the foo
 	 * @param  site whether the foo is to be associated with a main
 	 *         site
-	 * @param  serviceContext the foo's service context ... can be null. Can set asset category IDs, asset tag names,
+	 * @param  serviceContext the foo's service context ... can be <code>null</code>. Can set asset category IDs, asset tag names,
 	 *         and expando bridge attributes for the foo.
 	 * @return foo
 	 * @throws PortalException a creator or parent foo with the
@@ -72,13 +70,13 @@ public class FooLocalServiceImpl {
 	}
 
 	/**
-	 * Adds a resource for each type of permission available on the
+	 * Appends a resource for each type of permission available on the
 	 * foo.
 	 *
-	 * @param  userId the primary key of the creator/owner of the foo.
-	 * @param  foo the foo.
-	 * @throws PortalException if a portal exception occurred.
-	 * @throws SystemException if a system exception occurred.
+	 * @param  userId the primary key of the creator/owner of the foo
+	 * @param  foo the foo
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public void addFooResources(long userId, String foo)
 		throws PortalException, SystemException {
@@ -87,8 +85,7 @@ public class FooLocalServiceImpl {
 	}
 
 	/**
-	 * Removes the foo. The foo's associated resources and
-	 * assets are also deleted.
+	 * Removes the foo, associated resources and its assets.
 	 *
 	 * @param  fooId the primary key of the foo
 	 * @return
@@ -106,11 +103,11 @@ public class FooLocalServiceImpl {
 	}
 
 	/**
-	 * Gets the foo with the name.
+	 * Retrieves foo with the name.
 	 *
 	 * @param  companyId the primary key of the foo's company
 	 * @param  name a name
-	 * @return a foo.
+	 * @return a foo
 	 * @throws PortalException if the foo with the name could not be
 	 *         found
 	 * @throws SystemException if a system exception occurred
@@ -124,12 +121,12 @@ public class FooLocalServiceImpl {
 	}
 
 	/**
-	 * Gets foos belonging to the parent foo.
+	 * Retrieves foos belonging to the parent foo.
 	 *
 	 * @param  companyId the primary key of the foo's company
 	 * @param  parentFooId the primary key of the foo's parent
 	 *         foo
-	 * @return foos.
+	 * @return foos
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<String> getFoos(
@@ -142,7 +139,7 @@ public class FooLocalServiceImpl {
 	}
 
 	/**
-	 * gets foos belonging to the parent foo.
+	 * Retrieves a range of foos belonging to the parent foo.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -160,7 +157,7 @@ public class FooLocalServiceImpl {
 	 * @param  start the lower bound of the range of foos to return
 	 * @param  end the upper bound of the range of foos to return (not
 	 *         inclusive)
-	 * @return foos belonging to the parent foo.
+	 * @return foos belonging to the parent foo
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<String> getFoos(
@@ -190,7 +187,7 @@ public class FooLocalServiceImpl {
 	}
 
 	/**
-	 * Gives back true if the password policy has been assigned to the
+	 * Returns <code>true</code> if the password policy has been assigned to the
 	 * foo.
 	 *
 	 * @param  passwordPolicyId the primary key of the password policy
@@ -209,30 +206,34 @@ public class FooLocalServiceImpl {
 	}
 
 	/**
-	 * True if the user is a member of the foo,
-	 * optionally focusing on sub-foos or the specified foo.
+	 * Returns <code>true</code> if user is foo member. Can focus on either foo or sub-foos.
 	 * This method is usually called to determine if the user has view access to
 	 * a resource belonging to the foo.
 	 *
-	 * <p>
-	 *
-	 * <ol><li>If <code>inheritSubfoos=<code>false</code></code>:
+	 * <ol>
+	   <li>If <code>inheritSubfoos=<code>false</code></code>:
 	 * the method checks whether the user belongs to the foo specified
 	 * by <code>fooId</code>. The parameter
-	 * <code>includeSpecifiedFoo</code> is ignored.</li>
-	 * <li> The parameter <code>includeSpecifiedFoo</code> is
+	 * <code>includeSpecifiedFoo</code> is ignored.
+	   </li>
+	 * <li> 
+	   The parameter <code>includeSpecifiedFoo</code> is
 	 * ignored unless <code>inheritSubfoos</code> is also
-	 * <code>true</code>.</li>
-	 * <li>If <code>inheritSubfoos=<code>true</code></code> and
+	 * <code>true</code>.
+	   </li>
+	 * <li>
+	   If <code>inheritSubfoos=<code>true</code></code> and
 	 * <code>includeSpecifiedFoo=<code>false</code></code>: the method
 	 * checks whether the user belongs to one of the child foos of the one
-	 * specified by <code>fooId</code>.</li>
-	 * <li>If <code>inheritSubfoos=<code>true</code></code> and
+	 * specified by <code>fooId</code>.
+	   </li>
+	 * <li>
+	   If <code>inheritSubfoos=<code>true</code></code> and
 	 * <code>includeSpecifiedFoo=<code>true</code></code>: the method
 	 * checks whether the user belongs to the foo specified by
-	 * <code>fooId</code> or any of its child foos.</li></ol>
-	 *
-	 * <p>
+	 * <code>fooId</code> or any of its child foos.
+	   </li>
+	   </ol>
 	 *
 	 * @param  userId the primary key of the foo's user
 	 * @param  fooId the primary key of the foo

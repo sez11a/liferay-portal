@@ -1,0 +1,16 @@
+@import "../clay_variables";
+
+@import "functions/_global-functions";
+
+@import "atlas/_variables";
+
+@import "bootstrap/_functions";
+@import "bootstrap/_variables";
+@import "bootstrap/_mixins";
+
+@import "_variables";
+@import "_mixins";
+
+
+@import "../liferay_variables_custom";
+@import "../liferay_variables";

@@ -14,6 +14,9 @@
 
 package com.liferay.journal.internal.exportimport.data.handler;
 
+import com.liferay.changeset.model.ChangesetCollection;
+import com.liferay.changeset.service.ChangesetCollectionLocalService;
+import com.liferay.changeset.service.ChangesetEntryLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -27,9 +30,11 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.exportimport.kernel.staging.StagingConstants;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
@@ -54,6 +59,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -278,6 +284,40 @@ public class JournalArticleStagedModelDataHandler
 			PortletDataContext portletDataContext, JournalArticle article)
 		throws Exception {
 
+		ChangesetCollection changesetCollection =
+			_changesetCollectionLocalService.fetchOrAddChangesetCollection(
+				portletDataContext.getGroupId(),
+				StagingConstants.RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			JournalArticleResource.class);
+
+		_changesetEntryLocalService.deleteEntry(
+			changesetCollection.getChangesetCollectionId(), classNameId,
+			article.getResourcePrimKey());
+
+		Map<String, String[]> parameterMap =
+			portletDataContext.getParameterMap();
+
+		String versionHistoryControlName =
+			PortletDataHandlerControl.getNamespacedControlName(
+				"journal", "version-history");
+
+		if ((parameterMap.get(versionHistoryControlName) != null) &&
+			!portletDataContext.getBooleanParameter(
+				"journal", "version-history")) {
+
+			JournalArticle latestArticle =
+				_journalArticleLocalService.fetchLatestArticle(
+					article.getResourcePrimKey(), getExportableStatuses());
+
+			if ((latestArticle != null) &&
+				(latestArticle.getId() != article.getId())) {
+
+				return;
+			}
+		}
+
 		Element articleElement = portletDataContext.getExportDataElement(
 			article);
 
@@ -484,7 +524,7 @@ public class JournalArticleStagedModelDataHandler
 		List<JournalArticle> articles = _journalArticleLocalService.getArticles(
 			portletDataContext.getScopeGroupId(), articleId);
 
-		if (Validator.isNumber(articleId) || !articles.isEmpty()) {
+		if (!articles.isEmpty()) {
 			autoArticleId = true;
 		}
 
@@ -1164,9 +1204,8 @@ public class JournalArticleStagedModelDataHandler
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
 				JournalArticle.class, importedArticle.getResourcePrimKey());
 
-		importedArticle.setUrlTitle(mainFriendlyURLEntry.getUrlTitle());
-
-		_journalArticleLocalService.updateJournalArticle(importedArticle);
+		_journalArticleLocalService.updateArticle(
+			importedArticle.getId(), mainFriendlyURLEntry.getUrlTitle());
 	}
 
 	/**
@@ -1196,6 +1235,15 @@ public class JournalArticleStagedModelDataHandler
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleStagedModelDataHandler.class);
+
+	@Reference
+	private ChangesetCollectionLocalService _changesetCollectionLocalService;
+
+	@Reference
+	private ChangesetEntryLocalService _changesetEntryLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	private ConfigurationProvider _configurationProvider;
 	private DDMStructureLocalService _ddmStructureLocalService;

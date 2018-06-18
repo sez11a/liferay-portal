@@ -169,6 +169,7 @@ AUI.add(
 										label: field.get('label') || field.get('fieldName'),
 										options: field.get('options'),
 										pageIndex: instance.getPageIndex(field),
+										repeatable: field.get('repeatable'),
 										type: field.get('type'),
 										value: field.get('fieldName')
 									}
@@ -643,14 +644,6 @@ AUI.add(
 						var instance = this;
 
 						A.one('.lfr-ddm-add-rule').addClass('hide');
-
-						var navBar = A.one('.navbar');
-
-						var navBarList = navBar.one('ul');
-
-						var selectedItem = navBarList.one('li.active');
-
-						selectedItem.addClass('disabled');
 					},
 
 					_onRulesChange: function(val) {

@@ -16,7 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutAdded" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-created-succesfully") %>' />
 <liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutUpdated" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-updated-succesfully") %>' />
 
 <liferay-ui:error embed="<%= false %>" exception="<%= GroupInheritContentException.class %>" message="this-page-cannot-be-deleted-and-cannot-have-child-pages-because-it-is-associated-to-a-site-template" />
@@ -30,13 +29,9 @@
 	actionDropdownItems="<%= layoutsAdminDisplayContext.getActionDropdownItems() %>"
 	componentId="pagesManagementToolbar"
 	creationMenu="<%= layoutsAdminDisplayContext.isShowAddRootLayoutButton() ? layoutsAdminDisplayContext.getCreationMenu() : null %>"
-	filterDropdownItems="<%= layoutsAdminDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= layoutsAdminDisplayContext.getTotalItems() %>"
 	searchContainerId="pages"
-	searchFormName="searchFm"
 	showSearch="<%= false %>"
-	sortingOrder="<%= layoutsAdminDisplayContext.getOrderByType() %>"
-	sortingURL="<%= layoutsAdminDisplayContext.getSortingURL() %>"
 />
 
 <liferay-ui:error exception="<%= LayoutTypeException.class %>">

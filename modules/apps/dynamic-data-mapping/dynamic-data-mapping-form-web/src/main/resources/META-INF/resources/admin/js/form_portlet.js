@@ -151,6 +151,8 @@ AUI.add(
 						);
 
 						if (instance._isFormView()) {
+							instance.bindNavigationBar();
+
 							instance._eventHandlers.push(
 								instance.after('autosave', instance._afterAutosave),
 								A.one(nameEditor.element.$).on('keydown', A.bind('handleEditorTitleKeydown', instance)),
@@ -158,9 +160,7 @@ AUI.add(
 								A.one(nameEditor.element.$).on('keypress', A.bind('handleEditorTitleCopyAndPaste', instance)),
 								instance.one('#preview').on('click', A.bind('_onPreviewButtonClick', instance)),
 								instance.one('#publish').on('click', A.bind('_onPublishButtonClick', instance)),
-								instance.one('#publishIcon').on('click', A.bind('_onPublishIconClick', instance)),
-								instance.one('#showForm').on('click', A.bind('_onFormButtonClick', instance)),
-								instance.one('#showRules').on('click', A.bind('_onRulesButtonClick', instance))
+								instance.one('#publishIcon').on('click', A.bind('_onPublishIconClick', instance))
 							);
 
 							var autosaveInterval = Liferay.DDM.FormSettings.autosaveInterval;
@@ -169,6 +169,47 @@ AUI.add(
 								instance._intervalId = setInterval(A.bind('_autosave', instance, true), autosaveInterval * MINUTE);
 							}
 						}
+					},
+
+					bindNavigationBar: function() {
+						var instance = this;
+
+						var ACTIONS = {
+							'showForm': A.bind('_onFormButtonClick', instance),
+							'showRules': A.bind('_onRulesButtonClick', instance)
+						};
+
+						instance._currentTab = 'formBuilder';
+
+						Liferay.componentReady('formsNavigationBar').then(
+							function(navigationBar) {
+								navigationBar.on(
+									'itemClicked',
+									function(event) {
+										var itemData = event.data.item.data;
+
+										if (itemData && itemData.action && ACTIONS[itemData.action]) {
+											ACTIONS[itemData.action]();
+										}
+
+										var newItems = this.items;
+
+										newItems.forEach(
+											function (item) {
+												if (item.data.action === itemData.action) {
+													item.active = true;
+												}
+												else {
+													item.active = false;
+												}
+											}
+										);
+
+										this.items = newItems;
+									}
+								);
+							}
+						);
 					},
 
 					destructor: function() {
@@ -291,7 +332,7 @@ AUI.add(
 
 						instance.layoutVisitor.set('pages', formBuilder.get('layouts'));
 
-						var translationManager = instance.get('translationManager');
+						var translationManager = instance.get(STR_TRANSLATION_MANAGER);
 
 						var state = {
 							availableLanguageIds: translationManager.get('availableLocales'),
@@ -726,7 +767,7 @@ AUI.add(
 
 						A.one('.ddm-form-builder-buttons').addClass('hide');
 
-						instance.one('#showForm').removeClass('active');
+						instance.get(STR_TRANSLATION_MANAGER).hide();
 					},
 
 					_hideRuleBuilder: function() {
@@ -739,8 +780,6 @@ AUI.add(
 						var ruleBuilderAncestorNode = ruleBuilderNode.ancestor();
 
 						ruleBuilderAncestorNode.addClass('hide');
-
-						instance.one('#showRules').removeClass('active');
 
 						A.one('.portlet-forms').removeClass('liferay-ddm-form-rule-builder');
 					},
@@ -803,11 +842,11 @@ AUI.add(
 					_onFormButtonClick: function() {
 						var instance = this;
 
-						var ruleTab = instance.one('#showRules');
-
-						if (ruleTab.hasClass('disabled')) {
-							ruleTab.removeClass('disabled');
+						if (instance._currentTab == 'formBuilder') {
+							return;
 						}
+
+						instance._currentTab = 'formBuilder';
 
 						instance._hideRuleBuilder();
 
@@ -920,11 +959,11 @@ AUI.add(
 					_onRulesButtonClick: function() {
 						var instance = this;
 
-						var ruleTab = instance.one('#showRules');
-
-						if (ruleTab.hasClass('disabled')) {
+						if (instance._currentTab == 'ruleBuilder') {
 							return;
 						}
+
+						instance._currentTab = 'ruleBuilder'
 
 						instance._hideFormBuilder();
 
@@ -1031,7 +1070,7 @@ AUI.add(
 
 						A.one('.lfr-ddm-plus-button').removeClass('hide');
 
-						instance.one('#showForm').addClass('active');
+						instance.get(STR_TRANSLATION_MANAGER).show();
 					},
 
 					_showRuleBuilder: function() {
@@ -1055,8 +1094,6 @@ AUI.add(
 						}
 
 						A.one('.portlet-forms').addClass('liferay-ddm-form-rule-builder');
-
-						instance.one('#showRules').addClass('active');
 					},
 
 					_syncDescription: function() {

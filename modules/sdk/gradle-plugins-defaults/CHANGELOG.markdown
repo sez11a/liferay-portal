@@ -3761,7 +3761,7 @@ of a module includes transitive dependencies.
 - [LPS-82178]: Update the [Liferay Gradle Plugins Patcher] dependency to version
 1.0.13.
 
-## 5.4.33 - 2018-06-08
+## 5.4.33 - 2018-06-11
 
 ### Changed
 - [LPS-82209]: Update the [Liferay Gradle Plugins] dependency to version
@@ -3793,6 +3793,66 @@ of a module includes transitive dependencies.
 ### Changed
 - [LPS-82261]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.38.
+
+## 5.4.38 - 2018-06-12
+
+### Changed
+- [LPS-82261]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.39.
+
+## 5.4.39 - 2018-06-13
+
+### Changed
+- [LPS-82343]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.40.
+
+## 5.4.40 - 2018-06-13
+
+### Changed
+- [LPS-77425]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.41.
+
+## 5.4.41 - 2018-06-13
+
+### Changed
+- [LPS-77875]: Update the constant `DEFAULT_REPOSITORY_URL` in the
+`GradlePluginsDefaultsUtil` class to
+`https://repository.liferay.com/nexus/content/groups/public`.
+- [LPS-77875]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.42.
+
+## 5.4.42 - 2018-06-13
+
+### Changed
+- [LPS-77425]: Update the constant `DEFAULT_REPOSITORY_URL` in the
+`GradlePluginsDefaultsUtil` class to
+`https://repository-cdn.liferay.com/nexus/content/groups/public`.
+- [LPS-77425]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.43.
+
+## 5.4.43 - 2018-06-13
+
+### Changed
+- [LPS-77425]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.44.
+
+## 5.4.44 - 2018-06-14
+
+### Changed
+- [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.45.
+
+## 5.4.45 - 2018-06-15
+
+### Changed
+- [LPS-82534]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.46.
+
+## 5.4.46 - 2018-06-15
+
+### Changed
+- [LPS-77143]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.47.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -4218,6 +4278,8 @@ of a module includes transitive dependencies.
 [LPS-82178]: https://issues.liferay.com/browse/LPS-82178
 [LPS-82209]: https://issues.liferay.com/browse/LPS-82209
 [LPS-82261]: https://issues.liferay.com/browse/LPS-82261
+[LPS-82343]: https://issues.liferay.com/browse/LPS-82343
+[LPS-82534]: https://issues.liferay.com/browse/LPS-82534
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

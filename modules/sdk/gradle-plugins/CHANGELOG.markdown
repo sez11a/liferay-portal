@@ -4840,6 +4840,69 @@ version 2.1.44.
 - [LPS-82261]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.227.
 
+## 3.12.39 - 2018-06-12
+
+### Changed
+- [LPS-82261]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.45.
+- [LPS-82261]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.228.
+
+## 3.12.40 - 2018-06-13
+
+### Changed
+- [LPS-82343]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.187.
+- [LPS-82343]: Update the [Liferay Source Formatter] dependency to version
+1.0.660.
+
+## 3.12.41 - 2018-06-13
+
+### Removed
+- [LPS-77425]: Remove version difference for
+[Liferay Portal Tools Service Builder] based on the portal version.
+
+## 3.12.42 - 2018-06-13
+
+*No changes.*
+
+## 3.12.43 - 2018-06-13
+
+### Fixed
+- [LPS-77425]: Fix error when getting a tool version for an unknown portal
+version.
+
+## 3.12.44 - 2018-06-13
+
+### Fixed
+- [LPS-77425]: Fix error when configuring the `liferay` extension object for an
+unknown portal version.
+
+## 3.12.45 - 2018-06-14
+
+### Changed
+- [LPS-79679]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.188.
+- [LPS-79679]: Update the [Liferay Source Formatter] dependency to version
+1.0.661.
+
+## 3.12.46 - 2018-06-15
+
+### Changed
+- [LPS-82469]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.189.
+- [LPS-82469]: Update the [Liferay Source Formatter] dependency to version
+1.0.662.
+- [LPS-82534]: Update the [Liferay Ant BND] dependency to version 2.0.51.
+
+## 3.12.47 - 2018-06-15
+
+### Changed
+- [LPS-77143]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.190.
+- [LPS-77143]: Update the [Liferay Source Formatter] dependency to version
+1.0.663.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -5247,4 +5310,7 @@ version 1.0.227.
 [LPS-82130]: https://issues.liferay.com/browse/LPS-82130
 [LPS-82209]: https://issues.liferay.com/browse/LPS-82209
 [LPS-82261]: https://issues.liferay.com/browse/LPS-82261
+[LPS-82343]: https://issues.liferay.com/browse/LPS-82343
+[LPS-82469]: https://issues.liferay.com/browse/LPS-82469
+[LPS-82534]: https://issues.liferay.com/browse/LPS-82534
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

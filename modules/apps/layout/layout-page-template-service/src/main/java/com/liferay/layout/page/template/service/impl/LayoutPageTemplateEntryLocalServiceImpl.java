@@ -209,7 +209,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		if (Objects.equals(
 				layoutPageTemplateEntry.getType(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) &&
-			Validator.isNotNull(layoutPageTemplateEntry.getClassTypeId())) {
+			(layoutPageTemplateEntry.getClassTypeId() > 0)) {
 
 			DDMStructureLink ddmStructureLink =
 				_ddmStructureLinkLocalService.getUniqueStructureLink(
@@ -405,6 +405,21 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateEntry);
 
 		return layoutPageTemplateEntry;
+	}
+
+	@Override
+	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+			long layoutPageTemplateEntryId, long previewFileEntryId)
+		throws PortalException {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntryPersistence.findByPrimaryKey(
+				layoutPageTemplateEntryId);
+
+		layoutPageTemplateEntry.setPreviewFileEntryId(previewFileEntryId);
+
+		return layoutPageTemplateEntryLocalService.
+			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
 	}
 
 	@Override

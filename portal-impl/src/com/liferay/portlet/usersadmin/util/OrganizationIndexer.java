@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -117,8 +116,7 @@ public class OrganizationIndexer extends BaseIndexer<Organization> {
 			}
 
 			for (Organization organization : organizationsTree) {
-				String treePath = StringUtil.quote(
-					organization.buildTreePath(), StringPool.STAR);
+				String treePath = organization.buildTreePath();
 
 				WildcardQuery wildcardQuery = new WildcardQueryImpl(
 					Field.TREE_PATH, treePath);

@@ -34,6 +34,9 @@
 			<property name="allowLeadingSpaces" value="true" />
 		</check>
 	</source-processor>
+	<source-processor name="ConfigSourceProcessor">
+		<check name="ConfigDefinitionKeysCheck" />
+	</source-processor>
 	<source-processor name="CQLSourceProcessor">
 		<check name="CQLKeywordCheck" />
 		<check name="WhitespaceCheck">
@@ -310,12 +313,17 @@
 		<check name="WhitespaceCheck" />
 	</source-processor>
 	<source-processor name="PropertiesSourceProcessor">
+		<check name="PropertiesBuildIncludeDirsCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="PropertiesCommentsCheck" />
 		<check name="PropertiesDefinitionKeysCheck" />
 		<check name="PropertiesDependenciesFileCheck" />
 		<check name="PropertiesEmptyLinesCheck" />
 		<check name="PropertiesImportedFilesContentCheck" />
-		<check name="PropertiesLanguageKeysCheck" />
+		<check name="PropertiesLanguageKeysCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="PropertiesLiferayPluginPackageFileCheck" />
 		<check name="PropertiesLongLinesCheck" />
 		<check name="PropertiesPortalFileCheck" />

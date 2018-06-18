@@ -2,42 +2,6 @@ import {EventHandler} from 'metal-events';
 import {object} from 'metal';
 
 /**
- * Default configuration used for creating AlloyEditor instances.
- */
-
-const EDITOR_CONFIGURATION = {
-	enterMode: CKEDITOR.ENTER_BR,
-
-	extraPlugins: [
-		'ae_autolink',
-		'ae_dragresize',
-		'ae_addimages',
-		'ae_imagealignment',
-		'ae_placeholder',
-		'ae_selectionregion',
-		'ae_tableresize',
-		'ae_tabletools',
-		'ae_uicore',
-		'itemselector',
-		'media',
-		'adaptivemedia'
-	].join(','),
-
-	removePlugins: [
-		'contextmenu',
-		'elementspath',
-		'image',
-		'link',
-		'liststyle',
-		'magicline',
-		'resize',
-		'tabletools',
-		'toolbar',
-		'ae_embed'
-	].join(',')
-};
-
-/**
  * Enter key keycode
  * @review
  * @type {number}
@@ -45,6 +9,7 @@ const EDITOR_CONFIGURATION = {
 
 const KEY_ENTER = 13;
 
+let _destroyedCallback;
 let _editableElement;
 let _editor;
 let _editorEventHandler;
@@ -67,6 +32,9 @@ function destroy() {
 		_editableElement = null;
 		_editor = null;
 		_editorEventHandler = null;
+
+		_destroyedCallback();
+		_destroyedCallback = null;
 	}
 }
 
@@ -85,7 +53,8 @@ function getActiveEditableElement() {
  * @param {string} fragmentEntryLinkId
  * @param {string} portletNamespace
  * @param {Object} options
- * @param {function} callback
+ * @param {function} changedCallback
+ * @param {function} destroyedCallback
  */
 
 function init(
@@ -93,7 +62,8 @@ function init(
 	fragmentEntryLinkId,
 	portletNamespace,
 	options,
-	callback
+	changedCallback,
+	destroyedCallback
 ) {
 	destroy();
 
@@ -104,11 +74,17 @@ function init(
 	wrapper.dataset.lfrEditableId = editableElement.id;
 	wrapper.innerHTML = editableContent;
 
+	const editorName = `${portletNamespace}FragmentEntryLinkEditable_${editableElement.id}`;
+
+	wrapper.setAttribute('id', editorName);
+	wrapper.setAttribute('name', editorName);
+
 	editableElement.innerHTML = '';
 	editableElement.appendChild(wrapper);
 
 	_editableElement = editableElement;
 	_editorEventHandler = new EventHandler();
+	_destroyedCallback = destroyedCallback;
 
 	_editor = AlloyEditor.editable(
 		wrapper,
@@ -116,7 +92,8 @@ function init(
 			editableElement,
 			portletNamespace,
 			fragmentEntryLinkId,
-			defaultEditorConfiguration
+			defaultEditorConfiguration,
+			editorName
 		)
 	);
 
@@ -132,14 +109,21 @@ function init(
 	_editorEventHandler.add(
 		nativeEditor.on(
 			'change',
-			() => callback(nativeEditor.getData())
+			() => changedCallback(nativeEditor.getData())
 		)
 	);
 
 	_editorEventHandler.add(
 		nativeEditor.on(
 			'actionPerformed',
-			() => callback(nativeEditor.getData())
+			() => changedCallback(nativeEditor.getData())
+		)
+	);
+
+	_editorEventHandler.add(
+		nativeEditor.on(
+			'blur',
+			() => requestAnimationFrame(destroy)
 		)
 	);
 
@@ -163,27 +147,25 @@ function _getEditorConfiguration(
 	editableElement,
 	portletNamespace,
 	fragmentEntryLinkId,
-	defaultEditorConfiguration
+	defaultEditorConfiguration,
+	editorName
 ) {
-	const configuration = {};
-
-	configuration.title = [
-		portletNamespace,
-		'_FragmentEntryLinkEditable_',
-		fragmentEntryLinkId
-	].join('');
-
-	if (editableElement.getAttribute('type') === 'text') {
-		configuration.allowedContent = '';
-		configuration.disallowedContent = 'br';
-		configuration.toolbars = {};
-	}
-
 	return object.mixin(
 		{},
 		defaultEditorConfiguration.editorConfig || {},
-		EDITOR_CONFIGURATION,
-		configuration
+		{
+			filebrowserImageBrowseLinkUrl: defaultEditorConfiguration
+				.editorConfig
+				.filebrowserImageBrowseLinkUrl
+				.replace('_EDITOR_NAME_', editorName),
+
+			filebrowserImageBrowseUrl: defaultEditorConfiguration
+				.editorConfig
+				.filebrowserImageBrowseUrl
+				.replace('_EDITOR_NAME_', editorName),
+
+			title: editorName
+		}
 	);
 }
 
